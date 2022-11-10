@@ -1,10 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
+import { Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
+
+  public loginStatusSubject = new Subject<boolean>();
 
   constructor(private httpClient:HttpClient) { }
 
@@ -53,5 +55,9 @@ export class LoginService {
   public getUserRole(){
     let user = this.getUser();
     return user.authorities[0].authority;
+  }
+
+  public getCurrentUser(){
+    return this.httpClient.get(`http://localhost:8080/actual-usuario`);
   }
 }
